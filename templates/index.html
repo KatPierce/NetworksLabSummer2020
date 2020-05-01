@@ -1,0 +1,44 @@
+
+<html>
+    <body>
+        <h1>Page Index</h1>
+        <form action="/">
+            <input type="text" placeholder="Search" name="q">
+            <button type="submit"><i>Search</i></button>
+        </form>
+        <form action="/" method="POST">
+            <input type="text" placeholder="Page to index" name="add">
+            <button type="submit"><i>Add Page</i></button>
+        </form>
+        <h2>Pages in list</h2>
+        {% if urls|count >0 %}
+        <ul>
+            {% for url in urls %}
+                <li>{{url}}  
+                    <form action="/" method="POST">
+                        <input type="hidden" value ="{{url}}" name="remove">
+                            <button type="submit"><i>Remove</i></button>
+                </form></li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+        {% if not results==None %}
+        <h2>Search Results:</h2>
+        <p>The text was found in {{results|count}} pages</p>
+        {% if results|count >0 %}
+        {% for site, findings in results.items() %}
+        <ol><li>{{site}}
+            {% for finding in findings %}
+            <ul><li>{{finding}}</li></ul>
+            {% endfor %}
+        </li>
+        </ol>
+        {% endfor %}
+        {% endif %}
+        {% endif %}
+        {% if error!=0 %}
+        <script>alert("{{error}}")</script>
+        {% endif %}
+    </body>
+    
+    
